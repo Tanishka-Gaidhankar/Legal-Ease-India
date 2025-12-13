@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Happens If - Constitutional Section</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FDB750 0%, #F5A623 100%);
+            padding: 20px 40px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 15px 15px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #2c3e50;
+            font-size: 16px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 15px;
+            background-color: #FF9D4C;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-link:hover {
+            background-color: #FF8C42;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            padding: 30px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .scenarios-list {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-height: calc(100vh - 250px);
+            overflow-y: auto;
+        }
+
+        .scenarios-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #FDB750;
+        }
+
+        .scenario-btn {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .scenario-btn:hover {
+            background-color: #FFF8DC;
+            border-color: #FDB750;
+        }
+
+        .scenario-btn.active {
+            background-color: #FFF8DC;
+            border-color: #FDB750;
+            font-weight: bold;
+        }
+
+        .detail-panel {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-header {
+            margin-bottom: 30px;
+        }
+
+        .scenario-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #FDB750;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .explanation {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .consequences-list {
+            list-style: none;
+        }
+
+        .consequences-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .consequences-list li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #FDB750;
+            font-weight: bold;
+        }
+
+        .related-articles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .article-link {
+            background-color: #FFF8DC;
+            color: #FDB750;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            border: 1px solid #FDB750;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .article-link:hover {
+            background-color: #FDB750;
+            color: white;
+        }
+
+        .custom-scenario {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .custom-scenario h3 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #FDB750;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .custom-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Segoe UI', sans-serif;
+            resize: vertical;
+            min-height: 80px;
+            transition: border-color 0.3s ease;
+        }
+
+        .custom-input:focus {
+            outline: none;
+            border-color: #FDB750;
+        }
+
+        .submit-btn {
+            background-color: #FF9D4C;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background-color: #FF8C42;
+        }
+
+        .submit-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            color: #999;
+            font-style: italic;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .scenarios-list {
+                max-height: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .detail-panel {
+                padding: 20px;
+            }
+
+            .scenario-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>⚖️ What Happens If...</h1>
+        <p>Explore real-world scenarios and understand the legal consequences.</p>
+        <a href="page1.html" class="back-link">← Back to Constitutional Section</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Scenarios List (Left) -->
+        <div class="scenarios-list">
+            <div class="scenarios-title">📋 Common Scenarios</div>
+            <div id="scenariosList"></div>
+        </div>
+
+        <!-- Detail Panel (Right) -->
+        <div class="detail-panel">
+            <div class="detail-header" id="detailHeader">
+                <div class="loading">Select a scenario to view details...</div>
+            </div>
+
+            <!-- Custom Scenario Input -->
+            <div class="custom-scenario">
+                <h3>❓ Ask Your Own Scenario</h3>
+                <p style="color: #666; margin-bottom: 15px; font-size: 14px;">
+                    Can't find your scenario? Ask a custom question and our AI will analyze it for you.
+                </p>
+                <div class="input-group">
+                    <textarea 
+                        id="customInput" 
+                        class="custom-input" 
+                        placeholder="Example: What happens if I am not allowed to speak my own language in a government office?">
+                    </textarea>
+                </div>
+                <button id="submitBtn" class="submit-btn" onclick="handleCustomScenario()">
+                    Get AI Analysis
+                </button>
+                <div id="customResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 LegalEase India. All rights reserved. | Making legal knowledge accessible to all.</p>
+    </div>
+
+    <script>
+        let allScenarios = [];
+        let selectedScenario = null;
+
+        // Groq API Configuration
+        const GROQ_API_KEY = 'YOUR_GROQ_API_KEY_HERE'; // Replace with your Groq API key
+        const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+
+        // Load scenarios on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            loadScenarios();
+        });
+
+        function loadScenarios() {
+            fetch('scenarios.json')
+                .then(response => response.json())
+                .then(data => {
+                    allScenarios = data;
+                    renderScenariosList();
+                    if (allScenarios.length > 0) {
+                        displayScenario(0);
+                    }
+                })
+                .catch(() => {
+                    loadSampleScenarios();
+                });
+        }
+
+        function loadSampleScenarios() {
+            allScenarios = [
+                {
+                    "id": 1,
+                    "title": "What happens if I break a traffic rule?",
+                    "explanation": "Traffic rules exist to ensure the safety of all road users. Breaking them can result in penalties, fines, and in serious cases, legal action.",
+                    "consequences": ["Fine as per Motor Vehicles Act", "License suspension or cancellation", "Vehicle impounding in severe cases"],
+                    "relatedArticles": [21, 19, 14]
+                },
+                {
+                    "id": 3,
+                    "title": "What happens if I'm arrested without a warrant?",
+                    "explanation": "The Constitution provides protection against arbitrary arrest. Police cannot arrest anyone without proper legal procedure and reasonable cause.",
+                    "consequences": ["Violation of Article 22 rights", "Unlawful detention claim can be filed", "Habeas corpus petition to challenge arrest"],
+                    "relatedArticles": [22, 21, 20]
+                }
+            ];
+            renderScenariosList();
+            displayScenario(0);
+        }
+
+        function renderScenariosList() {
+            const scenariosList = document.getElementById('scenariosList');
+            scenariosList.innerHTML = allScenarios.map((scenario, index) => `
+                <button class="scenario-btn" onclick="displayScenario(${index})">
+                    ${scenario.title}
+                </button>
+            `).join('');
+        }
+
+        function displayScenario(index) {
+            const scenario = allScenarios[index];
+            selectedScenario = scenario;
+
+            // Update active button
+            document.querySelectorAll('.scenario-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+
+            // Display scenario details
+            const detailHeader = document.getElementById('detailHeader');
+            detailHeader.innerHTML = `
+                <div class="detail-header">
+                    <h2 class="scenario-title">${scenario.title}</h2>
+                    <div class="section">
+                        <div class="section-title">📝 Explanation</div>
+                        <div class="explanation">${scenario.explanation}</div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">⚠️ Legal Consequences</div>
+                        <ul class="consequences-list">
+                            ${scenario.consequences.map(con => `<li>${con}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">🔗 Related Articles</div>
+                        <div class="related-articles">
+                            ${scenario.relatedArticles.map(articleNum => `
+                                <a href="#" class="article-link" onclick="goToArticle(${articleNum}, event)">
+                                    Article ${articleNum}
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Clear custom result
+            document.getElementById('customResult').innerHTML = '';
+        }
+
+        function goToArticle(articleNum, event) {
+            event.preventDefault();
+            localStorage.setItem('selectedArticleId', articleNum);
+            window.location.href = 'page2.html';
+        }
+
+        async function handleCustomScenario() {
+            const customInput = document.getElementById('customInput').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+            const customResult = document.getElementById('customResult');
+
+            if (!customInput) {
+                customResult.innerHTML = '<div class="error">Please enter a scenario.</div>';
+                return;
+            }
+
+            // Check if API key is set
+            if (GROQ_API_KEY === 'YOUR_GROQ_API_KEY_HERE') {
+                customResult.innerHTML = '<div class="error">❌ API Key not configured. Replace GROQ_API_KEY with your actual key in the code.</div>';
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Analyzing...';
+            customResult.innerHTML = '<div class="loading">Processing your scenario with AI...</div>';
+
+            try {
+                const response = await fetch(GROQ_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${GROQ_API_KEY}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        model: 'mixtral-8x7b-32768',
+                        messages: [
+                            {
+                                role: 'system',
+                                content: 'You are a constitutional law expert for India. Provide a clear, concise analysis of legal scenarios based on the Indian Constitution. Format your response with: 1. Explanation (2-3 sentences), 2. Legal Consequences (bullet points), 3. Related Articles (mention relevant article numbers). Keep it educational and accessible.'
+                            },
+                            {
+                                role: 'user',
+                                content: `Analyze this scenario and provide legal insights based on the Indian Constitution: "${customInput}"`
+                            }
+                        ],
+                        max_tokens: 800,
+                        temperature: 0.7
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                const aiResponse = data.choices[0].message.content;
+
+                customResult.innerHTML = `
+                    <div class="success">
+                        <strong>🤖 AI Analysis:</strong>
+                        <div style="margin-top: 15px; white-space: pre-wrap; line-height: 1.8;">
+                            ${aiResponse}
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                customResult.innerHTML = `<div class="error">❌ Error: ${error.message}. Make sure your Groq API key is valid.</div>`;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Get AI Analysis';
+            }
+        }
+    </script>
+</body>
+</html>

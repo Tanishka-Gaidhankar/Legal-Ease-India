@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constitutional Section - LegalEase India</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FDB750 0%, #F5A623 100%);
+            padding: 20px 40px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 15px 15px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .nav-btn {
+            background-color: #FF9D4C;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #FF8C42;
+        }
+
+        .search-filter-section {
+            padding: 30px 40px;
+            background-color: white;
+            margin: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #FDB750;
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-dropdown {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-dropdown:focus {
+            outline: none;
+            border-color: #FDB750;
+        }
+
+        .article-list {
+            padding: 0 40px;
+        }
+
+        .article-count {
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .article-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-table thead {
+            background: linear-gradient(135deg, #FDB750 0%, #F5A623 100%);
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .article-table th {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .article-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .article-table tbody tr {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .article-table tbody tr:hover {
+            background-color: #FFF8DC;
+        }
+
+        .article-number {
+            font-weight: 600;
+            color: #FDB750;
+            min-width: 50px;
+        }
+
+        .article-title {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .article-part {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .no-results {
+            padding: 40px;
+            text-align: center;
+            color: #999;
+            font-size: 16px;
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .filter-section {
+                flex-direction: column;
+            }
+
+            .search-filter-section {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .article-list {
+                padding: 0 20px;
+            }
+
+            .article-table th,
+            .article-table td {
+                padding: 10px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>📖 Constitutional Section</h1>
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="openPage('whatHappensIf')">What Happens If…</button>
+            <button class="nav-btn" onclick="openPage('government')">How Government Works</button>
+        </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="search-filter-section">
+        <input 
+            type="text" 
+            id="searchBox" 
+            class="search-box" 
+            placeholder="Search by article number, title, or keyword..."
+            onkeyup="filterArticles()"
+        >
+        
+        <div class="filter-section">
+            <span class="filter-label">Filter by Part:</span>
+            <select 
+                id="partFilter" 
+                class="filter-dropdown"
+                onchange="filterArticles()"
+            >
+                <option value="">All Parts</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Article List -->
+    <div class="article-list">
+        <div class="article-count">
+            <span id="resultCount">Loading articles...</span>
+        </div>
+        
+        <table class="article-table" id="articleTable">
+            <thead>
+                <tr>
+                    <th>Article No.</th>
+                    <th>Title</th>
+                    <th>Part</th>
+                </tr>
+            </thead>
+            <tbody id="articleTableBody">
+                <tr>
+                    <td colspan="3" class="no-results">Loading articles...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 LegalEase India. All rights reserved. | Making legal knowledge accessible to all.</p>
+    </div>
+
+    <script>
+        let allArticles = [];
+        let filteredArticles = [];
+
+        // Load articles from JSON on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            loadArticles();
+        });
+
+        function loadArticles() {
+    fetch('constitution_enhanced.json')  // Make sure this file is in same folder
+        .then(response => response.json())
+        .then(data => {
+            allArticles = data;
+            populatePartFilter();
+            filterArticles();
+        })
+        .catch(() => {
+            console.error('Failed to load JSON. Using sample data.');
+            loadSampleData();
+        });
+}
+
+        then(response => {
+            if (response) {
+                return response.json();
+            }
+        }).then(data => {
+            if (data) {
+                allArticles = data;
+                populatePartFilter();
+                filterArticles();
+            }
+        });
+        
+
+        function loadSampleData() {
+            // Sample data for testing
+            allArticles = [
+                {
+                    "article": 0,
+                    "title": "Preamble",
+                    "description": "WE, THE PEOPLE OF INDIA, having solemnly resolved to constitute India into a SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC...",
+                    "part": "Preamble",
+                    "simpleExplanation": "This is the opening statement of India's Constitution.",
+                    "realLifeExample": "The Preamble sets the vision and values that guide all the articles.",
+                    "keywords": ["preamble", "sovereign", "democratic", "republic", "justice"]
+                },
+                {
+                    "article": 1,
+                    "title": "Name and territory of the Union",
+                    "description": "(1) India, that is Bharat, shall be a Union of States.",
+                    "part": "Part I: The Union and Its Territory",
+                    "simpleExplanation": "India is officially called 'Bharat' and is a Union of States.",
+                    "realLifeExample": "When Goa joined India in 1961, its territory was added to the Union.",
+                    "keywords": ["union", "territory", "bharat", "states"]
+                },
+                {
+                    "article": 14,
+                    "title": "Equality before law",
+                    "description": "The State shall not deny to any person in the territory of India equality before the law or the equal protection of the laws.",
+                    "part": "Part III: Fundamental Rights",
+                    "simpleExplanation": "All citizens are equal before the law and cannot be discriminated against.",
+                    "realLifeExample": "A person cannot be denied a job because of their religion or caste.",
+                    "keywords": ["equality", "discrimination", "fundamental right"]
+                },
+                {
+                    "article": 21,
+                    "title": "Protection of life and personal liberty",
+                    "description": "No person shall be deprived of his life or personal liberty except according to procedure established by law.",
+                    "part": "Part III: Fundamental Rights",
+                    "simpleExplanation": "No person can be deprived of their life or liberty except by legal procedure.",
+                    "realLifeExample": "Police cannot arrest someone without proper legal procedure.",
+                    "keywords": ["life", "liberty", "personal freedom", "due process"]
+                }
+            ];
+            populatePartFilter();
+            filterArticles();
+        }
+
+        function populatePartFilter() {
+            const partFilter = document.getElementById('partFilter');
+            const parts = new Set();
+
+            allArticles.forEach(article => {
+                if (article.part) {
+                    parts.add(article.part);
+                }
+            });
+
+            // Sort parts and add to dropdown
+            const sortedParts = Array.from(parts).sort();
+            sortedParts.forEach(part => {
+                const option = document.createElement('option');
+                option.value = part;
+                option.textContent = part;
+                partFilter.appendChild(option);
+            });
+        }
+
+        function filterArticles() {
+            const searchQuery = document.getElementById('searchBox').value.toLowerCase();
+            const selectedPart = document.getElementById('partFilter').value;
+
+            filteredArticles = allArticles.filter(article => {
+                const matchSearch = 
+                    String(article.article).toLowerCase().includes(searchQuery) ||
+                    article.title.toLowerCase().includes(searchQuery) ||
+                    article.description.toLowerCase().includes(searchQuery) ||
+                    (article.keywords && article.keywords.some(kw => kw.toLowerCase().includes(searchQuery)));
+
+                const matchPart = !selectedPart || article.part === selectedPart;
+
+                return matchSearch && matchPart;
+            });
+
+            renderArticleTable();
+        }
+
+        function renderArticleTable() {
+            const tableBody = document.getElementById('articleTableBody');
+            const resultCount = document.getElementById('resultCount');
+
+            if (filteredArticles.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="3" class="no-results">No articles found. Try a different search or filter.</td></tr>';
+                resultCount.textContent = 'No results found';
+                return;
+            }
+
+            tableBody.innerHTML = filteredArticles.map(article => `
+                <tr onclick="openArticleDetail(${article.article})">
+                    <td class="article-number">Article ${article.article}</td>
+                    <td class="article-title">${article.title}</td>
+                    <td class="article-part">${article.part}</td>
+                </tr>
+            `).join('');
+
+            resultCount.textContent = `Showing ${filteredArticles.length} article(s)`;
+        }
+
+        function openArticleDetail(articleNumber) {
+             localStorage.setItem('selectedArticleId', articleNumber);
+             window.location.href = 'page2.html';
+        }
+
+        function openPage(pageType) {
+            if (pageType === 'whatHappensIf') {
+                window.location.href = 'page3.html';
+                // window.location.href = 'page3.html';
+            } else if (pageType === 'government') {
+                alert('Opening "How Government Works" page. This will be Page 4.');
+                // window.location.href = 'page4.html';
+            }
+        }
+    </script>
+</body>
+</html>
